@@ -4,10 +4,8 @@ import java.sql.Timestamp;
 import java.util.LinkedHashMap;
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -25,8 +23,7 @@ import com.revature.backend.service.InterviewFeedbackService;
 import com.revature.backend.service.ManagerService;
 
 @RestController
-@RequestMapping(value = "/feedback")
-@CrossOrigin(origins = "*")
+@RequestMapping("/feedback")
 public class InterviewFeedbackController {
 	private InterviewFeedbackService ifServ;
 	private AssociateService assocServ;
@@ -41,7 +38,7 @@ public class InterviewFeedbackController {
 
 	/**
 	 * Return all feedback in the database
-	 * @param all The list of feedback should be returned 
+	 * @param all The list of feedback should be returned
 	 * @return Returns the all possible list of feedback if found, and null if not found
 	 */
 	@GetMapping("/all")
@@ -80,11 +77,7 @@ public class InterviewFeedbackController {
 	public ResponseEntity<List<InterviewFeedback>> getFeedbackByAssociate(@PathVariable("id") int id) {
 		Associate associate = assocServ.getAssociateById(id);
 		List<InterviewFeedback> feedbackList = ifServ.retrieveFeedbackByAssociate(associate);
-		if(feedbackList.size() == 0) {
-			return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
-		} else {
-			return new ResponseEntity<>(feedbackList, HttpStatus.OK);
-		}
+    return new ResponseEntity<>(feedbackList, HttpStatus.OK);
 	}
 
 	/**
@@ -97,11 +90,7 @@ public class InterviewFeedbackController {
 	public ResponseEntity<List<InterviewFeedback>> getFeedbackByManager(@PathVariable("id") int id) {
 		Manager manager = managerServ.getManagerById(id);
 		List<InterviewFeedback> feedbackList = ifServ.retrieveFeedbackByManager(manager);
-		if(feedbackList.size() == 0) {
-			return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
-		} else {
 			return new ResponseEntity<>(feedbackList, HttpStatus.OK);
-		}
 	}
 
 	/**
@@ -110,8 +99,7 @@ public class InterviewFeedbackController {
 	 * @param feedbackMap Map of the information to input into the feedback
 	 * @return Success or failure statement
 	 */
-
-  @PostMapping("")
+  @PostMapping
 	public ResponseEntity<String> postFeedback(@RequestBody LinkedHashMap feedbackMap) {
 		Associate associate = assocServ.getAssociateById((Integer)feedbackMap.get("associateId"));
 		if(associate == null) {
@@ -139,8 +127,6 @@ public class InterviewFeedbackController {
 	 */
 	@PutMapping("/{id}")
 	public ResponseEntity<String> updateFeedback(@RequestBody LinkedHashMap feedbackMap, @PathVariable("id") int id) {
-		System.out.println("Feedback Map: " + feedbackMap);
-		System.out.println("Manager Id: " + feedbackMap.get("managerId"));
 		Associate associate = assocServ.getAssociateById((Integer)feedbackMap.get("associateId"));
 		if(associate == null) {
 			return new ResponseEntity<>("Associate id is invalid", HttpStatus.NOT_FOUND);
@@ -154,9 +140,7 @@ public class InterviewFeedbackController {
 		InterviewFeedback feedback = ifServ.retrieveFeedbackById(id);
 		if(feedback == null) {
 			return new ResponseEntity<>("Feedback failed to be updated", HttpStatus.NOT_FOUND);
-		}
-
-		else {
+		} else {
 			String content = (String)feedbackMap.get("content");
 			feedback.setAssociate(associate);
 			feedback.setManager(manager);

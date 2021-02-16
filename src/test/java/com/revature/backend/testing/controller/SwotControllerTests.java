@@ -33,6 +33,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
@@ -42,20 +43,16 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
  * These tests make use of Junit 5.<p>
  * test 1:Tests if the Application Loads.<p>
  * test 2:Tests that you can hit the /swot/view/all endpoint and get the expected results.<p>
- * 
+ *
  * @author ? :wrote initial tests and individual test documentation.
  * @author Matthew Sheldon: Updated tests to work with Junit 5 and updated documentation.
  */
 @SpringBootTest
 public class SwotControllerTests {
-
 	ObjectMapper objectMapper = new ObjectMapper();
-	
-	@InjectMocks
-	SwotController swotController;
-	
+
 	private MockMvc mockMvc;
-	
+
 	@Mock
 	private SwotService service;
 
@@ -63,29 +60,17 @@ public class SwotControllerTests {
   public void before(){
     mockMvc=MockMvcBuilders.standaloneSetup(swotController).build();
   }
-	
-	
-
-	@MockBean
-	private AuthenticationManager mockAuthMan;
 
 	@Mock
 	private JwtAuthenticationFilter jwtAuth;
 	@InjectMocks
 	SwotController swotController;
 
-	@BeforeEach
-	public void setUp() {
-		MockitoAnnotations.initMocks(this);
-		mockMvc = MockMvcBuilders.standaloneSetup(swotController).build();
-	}
-
 	/*
 	 * Create a Swot object with an ID. This is obviously a lot of data and is more
 	 * going to be a template, fit to change in the future. 2/3/2021 - changed
 	 * method to include new analysis item comment field
 	 */
-
 	private Swot mockSwot(int id) {
 
 		List<AnalysisItem> mockAnalysisItems = new ArrayList<>();
@@ -134,3 +119,4 @@ public class SwotControllerTests {
 
 		this.mockMvc.perform(get("/swot/view/all")).andDo(print()).andExpect(status().isOk());
 	}
+}

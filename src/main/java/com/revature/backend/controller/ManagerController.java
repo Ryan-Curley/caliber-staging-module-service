@@ -1,6 +1,5 @@
 package com.revature.backend.controller;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -13,8 +12,7 @@ import com.revature.backend.service.ManagerService;
 @RestController
 @RequestMapping("/manager")
 public class ManagerController {
-
-	private final ManagerService managerService;
+  private final ManagerService managerService;
 
   public ManagerController(ManagerService managerService) {
     this.managerService = managerService;

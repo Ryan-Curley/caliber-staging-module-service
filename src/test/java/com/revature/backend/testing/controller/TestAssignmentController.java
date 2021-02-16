@@ -11,7 +11,6 @@ import static org.mockito.Mockito.when;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.junit.Test;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.runner.RunWith;
 import org.mockito.MockitoAnnotations;
@@ -45,7 +44,6 @@ import org.springframework.boot.test.context.SpringBootTest;
  * @author Andrew Curry: wrote tests and initial documentation.
  * @author Matthew Sheldon: updated tests to work with Junit 5 and updated documentation.
  */
-
 @SpringBootTest
 public class TestAssignmentController {
     // ----------
@@ -62,12 +60,12 @@ public class TestAssignmentController {
 
     @Mock
     private BatchRetriever mockBatchRetriever;
-    
+
     @Autowired
     @InjectMocks
     private AssignmentController assignmentController;
 
-    
+
     @BeforeEach
     public void setUp() {
     	MockitoAnnotations.initMocks(this);
@@ -125,7 +123,7 @@ public class TestAssignmentController {
         template.setFirstName(firstName);
         template.setLastName(lastName);
         // the expected and actual output
-        Associate expected 
+        Associate expected
             = new Associate(salesforceId, email, firstName, lastName, null, null, null);
         Associate actual = assignmentController.convertToAssociate(template);
         assertEquals(expected, actual);
@@ -144,7 +142,7 @@ public class TestAssignmentController {
         ApiAssociateTemplate assocTemplate = new ApiAssociateTemplate();
         ApiAssociateAssignment assignment = new ApiAssociateAssignment();
         assignment.setAssociate(assocTemplate);
-        ApiAssociateAssignment[] assignmentArray 
+        ApiAssociateAssignment[] assignmentArray
             = new ApiAssociateAssignment[]{assignment};
         ApiBatchTemplate batchTemplate = new ApiBatchTemplate();
         batchTemplate.setAssociateAssignments(assignmentArray);

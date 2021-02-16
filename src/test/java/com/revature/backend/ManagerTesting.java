@@ -99,18 +99,10 @@ public class ManagerTesting {
 		assertEquals(expectedMap, actualMap);
 	}
 	/**
-	 * This will test that we can get a manager by the manager id
-	 */
-	@Test
-	public void getManagerById() {
-		assertEquals(managerService.getManagerById(1), manager);
-	}
-	/**
 	 * For future batches implement a test for
 	*/
 	@Test
 	public void saveAllManagersSuccess() {
-		
 	}
 	/**
 	 * Helper method that builds a list of dummy associates, assigned to the given manager
